@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SQL to PostgREST converter</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+        <div class="row">
+            <h1>Translate SQL to PostgREST</h1>
+        </div>
+        <div class="row">
+            <div class="mb-3">
+                <label for="queryInput" class="form-label">Enter your SQL query:</label>
+                <textarea class="form-control" id="queryInput" rows="6"></textarea>
+            </div>
+            <div class="mb-3">
+                <button type="button" name="convert2Postgrest" class="btn btn-primary" onclick="convertToPostgREST()">Convert!</button>
+            </div>
+            
+            <div class="mb-3">
+                <h3>PostgREST URI:</h3>
+                <p id="pgUrl"></p>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+
+        function convertToPostgREST() {
+            var data = document.getElementById('queryInput').value;
+            result = sql2postgrest(data);
+            if (result) {
+                if (result.success) {
+                    log("SUCCESS: Query converted.", "success")
+                    document.getElementById("pgUrl").textContent=result.message;
+                } else {
+                    log("ERROR: Unable to convert query.", "error")
+                    document.getElementById("pgUrl").textContent=result.message;
+                }
+            } else {
+                log("things have gone badly for us.")
+            }
+        }
+
+    </script>
+    <script src="sql2pgrest.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>
